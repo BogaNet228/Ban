@@ -1,0 +1,75 @@
+#include <iostream>
+using namespace std;
+
+double calculateQuotient(double a, double d) {
+	if (d == 0) {
+		std::cout << "Деление на ноль!" << std::endl;
+		return 0;
+	}
+	else {
+		return a / d;
+	}
+}
+double calculateArea(double side) {
+	return side * side;
+}
+double calculateArea(double length, double width) {
+	return length * width;
+}
+double calculatePowerIterative(double c, int x) {
+	if (x < 0) {
+		cout << "Показатель степени должен быть неотрицательным." << endl;
+		return 0;
+	}
+	double result = 1.0;
+	for (int i = 0; i < x; ++i) {
+		result *= c;
+	}
+	return result;
+}
+double calculatePowerRecursive(double c, int x) {
+	if (x == 0) {
+		return 1.0;
+	}
+	else if (x > 0) {
+		return c * calculatePowerRecursive(c, x - 1);
+	}
+	else {
+		return 1 / calculatePowerRecursive(c, -x);
+	}
+}
+int main() {
+	setlocale(LC_ALL, "rus");
+	double a = 10.0;
+	double d = 2.0;
+	double result = calculateQuotient(a, d);
+	cout << "Частное " << a << " / " << d << " = " << result << endl;
+
+	d = 0.0;
+	result = calculateQuotient(a, d);
+	double side = 5.0;
+	double areaSquare = calculateArea(side);
+	cout << "Площадь квадрата со стороной " << side << " = " << areaSquare << endl;
+	
+	double length = 4.0;
+	double width = 6.0;
+	double areaRectangle = calculateArea(length, width);
+	cout << "Площадь прямоугольника с длиной " << length << " и шириной " << width << " = " << areaRectangle << endl;
+
+	double c = 2.0;
+	int x = 3;
+	double resultIterative = calculatePowerIterative(c, x);
+	cout << c << " в степени " << x << " (итеративно) = " << resultIterative << endl;
+
+	c = 2.0;
+	x = 3;
+	double resultRecursive = calculatePowerRecursive(c, x);
+	cout << c << " в степени " << x << " (рекурсивно) = " << resultRecursive << endl;
+
+	c = 2.0;
+	x = -3;
+	resultRecursive = calculatePowerRecursive(c, x);
+	cout << c << " в степени " << x << " (рекурсивно) = " << resultRecursive << endl;
+
+	return 0;
+}

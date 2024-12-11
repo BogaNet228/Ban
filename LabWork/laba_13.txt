@@ -1,0 +1,99 @@
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+// Структура для 3 и 4
+struct struct1 {
+    int a;
+    double b;
+    char c;
+};
+
+int main() {
+    setlocale(LC_ALL, "rus");
+
+    // 1 Запись случайных чисел 
+    cout << "Введите имя файла для записи -  ";
+    string filename;
+    cin >> filename;
+
+    cout << "Введите количество случайных чисел - ";
+    int n;
+    cin >> n;
+
+    ofstream outfile(filename);
+    if (outfile.is_open()) {
+        
+        for (int i = 0; i < n; ++i) {
+            outfile << rand() % 100 + 1 << " ";
+        }
+        outfile.close();
+        cout << "Случайные числа в файле " << filename << endl;
+    }
+    else {
+        cout << "Не удалось открыть файл для записи" << endl;
+    }
+
+    // 2 Сумма из файла
+    cout << "имя файла для чтения - ";
+    cin >> filename;
+
+    ifstream infile(filename);
+    if (infile.is_open()) {
+        int sum = 0;
+        int num;
+        while (infile >> num) {
+            sum += num;
+        }
+        infile.close();//закрытие файла
+        cout << "Сумма чисел в файле -  " << sum << endl;
+    }
+    else {
+        cout << "Не удалось открыть файл для чтения." << endl;
+    }
+
+    // 3 Запись структур в файл
+    cout << "Введите имя файла для записи структур: ";
+    cin >> filename;
+
+    ofstream outfileStruct(filename, ios::binary);
+    if (outfileStruct.is_open()) {
+        struct1 s1 = { 10, 3.14, 'A' };
+        struct1 s2 = { 20, 2.71, 'B' };
+        struct1 s3 = { 30, 1.61, 'C' };
+
+        outfileStruct.write(reinterpret_cast<char*>(&s1), sizeof(s1));//запись структуры s1 в бинарный файл outfileStruct
+        outfileStruct.write(reinterpret_cast<char*>(&s2), sizeof(s2));
+        outfileStruct.write(reinterpret_cast<char*>(&s3), sizeof(s3));
+
+        outfileStruct.close();
+        cout << "Структуры записаны в файл " << filename << endl;
+    }
+    else {
+        cout << "Не удалось открыть файл для записи структур" << endl;
+    }
+
+    // 4 Чтение структур
+    cout << "Введите имя файла для чтения структур: ";
+    cin >> filename;
+
+    ifstream infileStruct(filename, ios::binary);
+    if (infileStruct.is_open()) {
+       struct1 s1, s2, s3;
+
+        infileStruct.read(reinterpret_cast<char*>(&s1), sizeof(s1));//чтение структуры s в бинарный файл outfileStruct
+        infileStruct.read(reinterpret_cast<char*>(&s2), sizeof(s2));
+        infileStruct.read(reinterpret_cast<char*>(&s3), sizeof(s3));
+
+        infileStruct.close();
+        cout << "Значения полей структур:" << endl;
+        cout << "1 - a = " << s1.a << ", b = " << s1.b << ", c = " << s1.c << endl;
+        cout << "2 - a = " << s2.a << ", b = " << s2.b << ", c = " << s2.c << endl;
+        cout << "3 - a = " << s3.a << ", b = " << s3.b << ", c = " << s3.c << endl;
+    }
+    else {
+        cout << "Не удалось открыть файл для чтения структур" << endl;
+    }
+
+    return 0;
+}

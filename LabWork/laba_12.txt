@@ -1,0 +1,78 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+// вариант 7
+struct Product {
+    string type;
+    string name;
+    double price;
+};
+
+int main() {
+    setlocale(LC_ALL, "rus");
+
+    // 7.2 Тестирование структуры
+    Product product1;
+    product1.type = "Электроника";
+    product1.name = "Телевизор";
+    product1.price = 30000.0;
+
+    cout << "Информация о товаре:" << endl;
+    cout << "Тип: " << product1.type << endl;
+    cout << "Наименование: " << product1.name << endl;
+    cout << "Цена: " << product1.price << endl;
+
+    // 7.3 Ввод данных в массив структур 
+    const int MAX_PRODUCTS = 100; 
+    Product products[MAX_PRODUCTS];
+    int n;
+
+    cout << "Введите количество товаров (максимум " << MAX_PRODUCTS << "): ";
+    cin >> n;
+
+    
+    if (n <= 0 || n > MAX_PRODUCTS) {
+        cerr << "Некорректное количество товаров." << endl;
+        return 1;
+    }
+
+    for (int i = 0; i < n; ++i) {
+        cout << "\nВведите данные для товара " << i + 1 << ":" << endl;
+        cout << "Тип: ";
+        cin >> products[i].type;
+        cout << "Наименование: ";
+        cin >> products[i].name;
+        cout << "Цена: ";
+        cin >> products[i].price;
+    }
+
+    // 7.4 Поиск по массиву (например, по типу товара)
+    string search;
+    cout << "\nВведите тип товара для поиска: ";
+    cin >> search;
+
+    cout << "\nТовары типа " << search << ":" << endl;
+    for (int i = 0; i < n; ++i) {
+        if (products[i].type == search) {
+            cout << "Наименование: " << products[i].name << ", Цена: " << products[i].price << endl;
+        }
+    }
+
+    // 7.4 Поиск по массиву (например, по диапазону цен)
+    double minPrice, maxPrice;
+    cout << "\nВведите минимальную цену: ";
+    cin >> minPrice;
+    cout << "Введите максимальную цену: ";
+    cin >> maxPrice;
+
+    cout << "\nТовары с ценой в диапазоне от " << minPrice << " до " << maxPrice << ":" << endl;
+    for (int i = 0; i < n; ++i) {
+        if (products[i].price >= minPrice && products[i].price <= maxPrice) {
+            cout << "Наименование: " << products[i].name << ", Цена: " << products[i].price << endl;
+        }
+    }
+
+    return 0;
+}

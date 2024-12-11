@@ -1,0 +1,101 @@
+#include <iostream>
+
+using namespace std;
+
+// Функция для вывода массива с индексами
+void printArrayIndex(int arr[], int size) {
+    for (int i = 0; i < size; ++i) {
+        cout << "[" << i << "] " << arr[i] << " ";
+    }
+    cout << endl;
+}
+
+// Алгоритм сортировки пузырьком
+void bubble(int arr[], int size) {
+    for (int i = 0; i < size - 1; ++i) {
+        for (int j = 0; j < size - i - 1; ++j) {
+            if (arr[j] > arr[j + 1]) {
+                swap(arr[j], arr[j + 1]);
+            }
+            cout << "Итерация: " << i << ", " << j << " - ";
+            printArrayIndex(arr, size);
+        }
+    }
+}
+
+// Алгоритм сортировки выбором
+void selection(int arr[], int size) {
+    for (int i = 0; i < size - 1; ++i) {
+        int minIndex = i;
+        for (int j = i + 1; j < size; ++j) {
+            if (arr[j] < arr[minIndex]) {
+                minIndex = j;
+            }
+        }
+        if (minIndex != i) {
+            swap(arr[i], arr[minIndex]);
+        }
+        cout << "Итерация: " << i << " - ";
+        printArrayIndex(arr, size);
+    }
+}
+
+// Алгоритм сортировки вставками
+void Sort(int arr[], int size) {
+    for (int i = 1; i < size; ++i) {
+        int key = arr[i];
+        int j = i - 1;
+        while (j >= 0 && arr[j] > key) {
+            arr[j + 1] = arr[j];
+            j--;
+        }
+        arr[j + 1] = key;
+        cout << "Итерация: " << i << " - ";
+        printArrayIndex(arr, size);
+    }
+}
+
+
+int main() {
+    setlocale(LC_ALL,"ru");
+    int data[] = { 64, 34, 25, 12, 22, 11, 90 };
+    int size = sizeof(data) / sizeof(data[0]);
+
+    cout << "Исходный массив: ";
+    printArrayIndex(data, size);
+
+    cout << "Cортировка пузырьком:";
+    int* bubbleData = new int[size];
+    for (int i = 0; i < size; ++i) {
+        bubbleData[i] = data[i];
+    }
+    bubble(bubbleData, size);
+    cout << "Отсортированный массив: ";
+    printArrayIndex(bubbleData, size);
+    delete[] bubbleData; // Освобождаем память
+
+
+    cout << "Сортировка выбором:";
+    int* selectionData = new int[size];
+    for (int i = 0; i < size; ++i) {
+        selectionData[i] = data[i];
+    }
+    selection(selectionData, size);
+    cout << "Отсортированный массив: ";
+    printArrayIndex(selectionData, size);
+    delete[] selectionData; // Освобождаем память
+
+
+    cout << "Сортировка вставками:";
+    int* SortData = new int[size];
+    for (int i = 0; i < size; ++i) {
+        SortData[i] = data[i];
+    }
+    Sort(SortData, size);
+    cout << "Отсортированный массив: ";
+    printArrayIndex(SortData, size);
+    delete[]    SortData; // Освобождаем память
+
+
+    return 0;
+}
