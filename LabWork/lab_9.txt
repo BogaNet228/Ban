@@ -1,0 +1,65 @@
+#include <iostream>
+using namespace std;
+
+void Swap(double& a, double& b)
+{
+	double temp = a;
+	a = b;
+	b = temp;
+}
+
+void PrintMass(char arr[], int count)
+{
+	for (int i = 0; i < count; i++) 
+	{
+		cout << arr[i] << " ";
+	}
+	cout << endl;
+}
+
+void RandMass(int arr[], int count)
+{
+	for (int i = 0; i < count; i++)
+	{
+		arr[i] = rand() % 100;
+	}
+}
+
+
+int main()
+{
+	//1
+	double x = 3.21;
+	double y = 1.23;
+	cout << "do Swap:" << "x = " << x <<"y = " << y<<endl;
+	Swap(x, y);
+	cout << "posle Swap:" << "x = " << x << "y =" << y<<endl;
+	
+	cout << endl;
+	
+	//2
+
+	char arr[] = { 'w','o','r','l','d' };
+	int count = 5;
+
+	PrintMass(arr, count);
+	cout << endl;
+
+	//3
+
+	const int size = 20;
+	int numberMass[size];
+
+	RandMass(numberMass, size);
+
+	for (int i = 0; i < size; i++)
+	{
+		cout << numberMass[i] << ' ';
+	}
+	cout << endl;
+
+
+
+
+
+}
