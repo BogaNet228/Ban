@@ -1,0 +1,175 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Time 
+{
+private:
+    int hour;
+    int minute;
+    int second;
+
+public:
+    Time() 
+    {
+        hour = 12;
+        minute = 0;
+        second = 0;
+    }
+
+    Time(int a, int b, int c)
+    {
+        hour = a;
+        minute = b;
+        second = c;
+    }
+    Time(int a) 
+    {
+        if (a < 0)
+        {
+            hour = 0;
+            minute = 0;
+            second = 0;
+        }
+        else 
+        {
+            hour = a / 3600;
+            a %= 3600;
+            minute = a / 60;
+            second = a % 60;
+        }
+    }
+    void Print() 
+    {
+        cout << hour << ":" << minute << ":" << second << endl;
+    }
+    int getFullSeconds()
+    {
+        return hour * 3600 + minute * 60 + second;
+    }
+
+    // Перегруженный оператор индексации
+    int operator[](int i) 
+    {
+        switch (i) {
+        case 1: 
+            return hour;
+        case 2: 
+            return minute;
+        case 3: 
+            return second;
+        default: 
+            return -1; 
+        }
+    }
+};
+
+int main()
+{
+    setlocale(LC_ALL, "ru");
+    //1
+    Time defalt;
+    defalt.Print();
+
+    cout << endl;
+    //2
+    Time time1(18, 16, 01);
+    time1.Print();
+
+    cout << endl;
+    //3
+    Time second(12108);
+    second.Print();
+
+    cout << endl;
+    //4
+    Time FullSec(1, 15, 03);
+    FullSec.getFullSeconds();
+
+    cout << endl;
+
+    cout << "Hour: " << time1[1] << endl;
+    cout << "Minute: " << time1[2] << endl;
+    cout << "Second: " << time1[3] << endl;
+    cout << "MiliSecond: " << time1[4] << endl;
+
+    cout << endl;
+
+    int const maxSize = 10;
+    Time massiveTime[maxSize];
+
+    int n;
+    cout << "Введите количество объектов(< 10)" << endl;
+    cin >> n;
+
+    for (int i = 0; i < n; i++)
+    {
+        int h, m, s;
+        cout << "Введите время для объекта " << i + 1 << " (часы, минуты, секунды): ";
+        cin >> h >> m >> s;
+        massiveTime[i] = Time(h, m, s);
+    }
+
+    cout << "Вывод всех объектов Time:" << std::endl;
+    for (int i = 0; i < n; ++i) {
+        massiveTime[i].Print();
+    }
+
+    cout << endl;
+
+    //поиск
+
+    cout << "Введите критерий поиска (1 - диапазон, 2 - позже указанного времени, 3 - вне диапазона): ";
+    int search;
+    cin >> search;
+
+    if (search == 1)
+    {
+        int startHour, endHour;
+        cout << "Введите начальный час: ";
+        cin >> startHour;
+        cout << "Введите конечный час: ";
+        cin >> endHour;
+
+        cout << "Элементы в диапазоне от " << startHour << " до " << endHour << ":" << std::endl;
+        for (int i = 0; i < n; ++i)
+        {
+            if (massiveTime[i][1] >= startHour && massiveTime[i][1] <= endHour)
+            {
+                massiveTime[i].Print();
+            }
+        }
+    }
+    else if (search == 2)
+    {
+        int hour, minute;
+        cout << "Введите час и минуту: ";
+        cin >> hour >> minute;
+        int j = 1;
+        cout << "Элементы позже " << hour << ":" << minute << ":" << std::endl;
+        for (int i = 0; i < n; ++i)
+        {
+            int a = massiveTime[i].getFullSeconds();
+            if (massiveTime[i].getFullSeconds() > hour * 3600 + minute * 60)
+            {
+                massiveTime[i].Print();
+            }
+        }
+    }
+    else if (search == 3) {
+        int startHour, endHour;
+        cout << "Введите начальный час: ";
+        cin >> startHour;
+        cout << "Введите конечный час: ";
+        cin >> endHour;
+
+        cout << "Элементы вне диапазона от " << startHour << " до " << endHour << ":" << endl;
+        for (int i = 0; i < n; ++i) {
+            if (massiveTime[i][1] < startHour || massiveTime[i][1] > endHour) {
+                massiveTime[i].Print();
+            }
+        }
+    }
+
+    else cout << "Ошибка";
+}
