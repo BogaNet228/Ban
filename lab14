@@ -1,0 +1,76 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+void selectionSort(std::vector<int>& arr) {
+    int n = arr.size();
+
+    for (int i = 0; i < n - 1; ++i) {
+        int minIndex = i;
+
+        for (int j = i + 1; j < n; ++j) {
+            if (arr[j] < arr[minIndex]) {
+                minIndex = j;
+            }
+        }
+
+        if (minIndex != i) {
+            swap(arr[i], arr[minIndex]);
+        }
+    }
+}
+
+
+int main() 
+{
+    setlocale(LC_ALL, "Ru");
+    int a = 10;
+    int b = 20;
+    int max, min;
+
+    if (a > b) {
+        max = a;
+        min = b;
+    }
+    else 
+    {
+        max = b;
+        min = a;
+    }
+
+    cout << "Максимальное значение: " << max << endl;
+    cout << "Минимальное значение: " << min << endl;
+
+    double cuslitel, delitel, result;
+
+    cout << "Введите числитель: ";
+    cin >> cuslitel;
+
+    while (true) {
+        cout << "Введите делитель (не должен быть равен нулю): ";
+        cin >> delitel;
+
+        if (delitel != 0) {
+            break;
+        }
+        else {
+            cout << "Ошибка: делитель не может быть равен нулю. Повторите ввод." << endl;
+        }
+    }
+
+    result = cuslitel / delitel;
+    cout << "Частное: " << result << endl;
+
+    vector<int> arr = { 64, 25, 12, 22, 11 };
+
+    selectionSort(arr);
+
+    cout << "Отсортированный массив: ";
+    for (const auto& num : arr) {
+        cout << num << " ";
+    }
+    cout << std::endl;
+
+
+    return 0;
+}
