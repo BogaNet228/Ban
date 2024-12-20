@@ -1,0 +1,71 @@
+#include <iostream>
+#include <stdio.h>
+using namespace std;
+
+int main() 
+{
+    setlocale(LC_ALL, "Ru");
+    char filename[100];
+    cout << "Введите имя файла: ";
+    cin >> filename;
+
+    
+    FILE* file = fopen(filename, "r");
+    if (file == NULL) 
+    {
+        cout << "Файл с именем '" << filename << "' не существует." << endl;
+    }
+    else 
+    {
+        char buffer[256];
+        cout << "Содержимое файла:" << endl;
+
+        
+        while (fgets(buffer, sizeof(buffer), file) != nullptr) 
+        {
+            cout << buffer;
+        }
+
+        fclose(file);
+    }
+
+    char sourceFile[100];
+    char destFile[100];
+
+    cout << "Введите имя исходного файла: ";
+    cin >> sourceFile;
+
+    cout << "Введите имя целевого файла: ";
+    cin >> destFile;
+
+    
+    FILE* src = fopen(sourceFile, "r");
+    if (src == NULL) 
+    {
+        cout << "Исходный файл '" << sourceFile << "' не существует." << endl;
+        return 1; 
+    }
+
+    
+    FILE* dest = fopen(destFile, "w");
+    if (dest == NULL) 
+    {
+        cout << "Не удалось открыть целевой файл '" << destFile << "' для записи." << endl;
+        fclose(src);
+        return 1; 
+    }
+
+    char buffer[256];
+
+    
+    while (fgets(buffer, sizeof(buffer), src) != nullptr) 
+    {
+        fputs(buffer, dest);
+    }
+
+    cout << "Данные успешно скопированы из '" << sourceFile << "' в '" << destFile << "'." << endl;
+
+    fclose(src);
+    fclose(dest);
+    return 0;
+}
