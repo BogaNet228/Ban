@@ -1,0 +1,119 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+
+class Stack {
+private:
+    vector<int> elements;
+
+public:
+    void push(int value) 
+    {
+        elements.push_back(value);
+    }
+
+    int pop() 
+    {
+        if (isEmpty()) 
+        {
+            throw std::out_of_range("Стек пуст");
+        }
+        int value = elements.back();
+        elements.pop_back();
+        return value;
+    }
+
+    
+    bool isEmpty() const {
+        return elements.empty();
+    }
+
+    
+    size_t size() const {
+        return elements.size();
+    }
+
+    
+    void print() const 
+    {
+        cout << "Элементы стека: ";
+        for (int i = elements.size() - 1; i >= 0; --i) 
+        {
+            cout << elements[i] << " ";
+        }
+        cout << endl;
+    }
+
+    
+    double average() const 
+    {
+        if (isEmpty()) 
+        {
+            throw std::runtime_error("Невозможно вычислить среднее, стек пуст");
+        }
+        double sum = 0;
+        for (int value : elements) 
+        {
+            sum += value;
+        }
+        return sum / size();
+    }
+};
+
+int main() 
+{
+    setlocale(LC_ALL, "Ru");
+    Stack stack;
+    int N;
+
+    cout << "Введите количество элементов в стеке: ";
+    cin >> N;
+
+    
+    for (int i = 0; i < N; ++i) 
+    {
+        int value;
+        cout << "Введите элемент " << i + 1 << ": ";
+        cin >> value;
+        stack.push(value);
+    }
+
+    
+    stack.print();
+
+    
+    int X;
+    cout << "Введите количество элементов для извлечения из стека: ";
+    cin >> X;
+
+    for (int i = 0; i < X; ++i) 
+    {
+        if (!stack.isEmpty()) 
+        {
+            int poppedValue = stack.pop();
+            cout << "Извлечённый элемент: " << poppedValue << endl;
+        }
+        else 
+        {
+            cout << "Стек пуст, невозможно извлечь элемент." << endl;
+            break;
+        }
+    }
+
+    
+    try 
+    {
+        double avg = stack.average();
+        cout << "Среднее арифметическое элементов стека: " << avg << endl;
+    }
+    catch (const exception& e) 
+    {
+        cout << e.what() << endl;
+    }
+
+    
+    stack.print();
+
+    return 0;
+}
